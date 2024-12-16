@@ -1,0 +1,10 @@
+GET /ems           				        200 OK                     	getEmployees();
+GET /ems/{id}      				        200 OK or 404 Not Found    	getEmployeeById(UUID id);
+POST /ems          				        201 CREATED                	addEmployee(Employee employee);
+PUT /ems/{id}      				        200 OK or 404 NOT Found    	updateEmployee(UUID id,Employee employee);
+DELETE /ems/{id}   				        204 No Content or 404      	deleteEmployee(UUID id);
+GET /ems/users/age/{from}/{to} 			200 OK                   	getEmployeeByAgeCriteria(Integer from, Integer to);
+GET /ems/users/after/{joiningDate} 	    200 OK                   	getEmployeeAfterjoiningDate(LocalDate joiningDate)
+GET /ems/users/before/{joiningDate} 	200 OK                   	getEmployeeBeforejoiningDate(LocalDate joiningDate)
+GET /ems/users/sort/{order} 	        200 OK                   	sortEmployeeByJoiningDate(Integer order)
+GET /ems/users/department/{department} 	200 OK                   	getEmployeeByDepartment(String department)
