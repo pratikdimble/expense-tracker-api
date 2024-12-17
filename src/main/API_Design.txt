@@ -1,12 +1,13 @@
 
-POST /api/login: Authenticate user.
-//Expense Controller
-GET /api/expense           				 200 OK                     	Retrieve expenses for a user();
-POST /api/expense          				 201 CREATED                	addExpense(Employee employee);
-PUT /api/expense/{id}      				 200 OK or 404 NOT Found    	updateExpense(UUID id,Expense expense);
-DELETE /api/expense/{id}   				 204 No Content or 404      	deleteExpense(UUID id);
-//Filter Controller
-GET /api/expense/filter/{type}/{keyword}          200 OK                 filterByType(String Type, String Keyword)//name/category
-GET /api/expense/filter/{fromDate}/{toDate}       200 OK                 filterByDateRange(LocalDate fromDate, LocalDate toDate)
-//Report Controller
-Get /api/report//{fromDate}/{toDate}              200 OK                  summaryReport(LocalDate date)
+POST /api/login:                            Authenticate user.
+                    //Expense Controller
+GET /api/expense/users/{userId}           				    200 OK                     	Retrieve expenses for a user();
+GET /api/expense/users/deleted-expense/{userId}           	200 OK                     	Retrieve deleted expenses for a user();
+POST /api/expense          				                    201 CREATED                	addExpense(Employee employee);
+PUT /api/expense/{id}      				                    200 OK or 404 NOT Found    	updateExpense(UUID id,Expense expense);
+DELETE /api/expense/{id}   				                    204 No Content or 404      	deleteExpense(UUID id);
+                //Filter Controller
+GET /api/expense/filter/{type}/{keyword}                    200 OK                 filterByType(String Type, String Keyword)//name/category
+GET /api/expense/filter/{fromDate}/{toDate}                 200 OK                 filterByDateRange(LocalDate fromDate, LocalDate toDate)
+                //Report Controller
+Get /api/report//{fromDate}/{toDate}                        200 OK                  summaryReport(LocalDate date)
