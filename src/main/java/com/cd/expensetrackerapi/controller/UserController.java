@@ -1,6 +1,7 @@
 package com.cd.expensetrackerapi.controller;
 
 
+import com.cd.expensetrackerapi.exceptions.UserNotFoundException;
 import com.cd.expensetrackerapi.model.UserMaster;
 import com.cd.expensetrackerapi.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UserController {
         if(result>0)
             return  ResponseEntity.ok(result);
         else
-            throw new BadCredentialsException(" Invalid Username or Password  !!");
+            throw new UserNotFoundException();
     }
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {

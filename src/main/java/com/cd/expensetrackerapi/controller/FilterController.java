@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/expense")
@@ -18,21 +19,23 @@ public class FilterController {
     @Autowired
     IFilterService filterService;
 
-    @GetMapping("/filter/{userId}/{category}/{keyword}")
+    /*@GetMapping("/filter/{userId}/{category}/{keyword}")
     public ResponseEntity<List<ExpenseMaster>> getExpenses(@PathVariable Long userId, @PathVariable String category, @PathVariable String keyword)
     {
         return ResponseEntity.ok(filterService.filterByType(userId, category, keyword));
-    }
+    }*/
 
     @PostMapping("/filter")
-    public ResponseEntity<List<ExpenseMaster>>  getExpenses(@RequestBody RequestDto requestDto)
+    public ResponseEntity<List<ExpenseMaster>>  filterExpenses(@RequestBody RequestDto requestDto)
     {
-        if(requestDto.getCategory() != null && !requestDto.getKeyword().isEmpty())
-            return ResponseEntity.ok(filterService.filterByDateRangeAndCategoryAndKeyword(requestDto.getUserId(), requestDto.getFromDate(),requestDto.getToDate(), requestDto.getCategory(), requestDto.getKeyword()));
-        else if (requestDto.getCategory() != null && requestDto.getKeyword().isEmpty())
-            return ResponseEntity.ok(filterService.filterByDateRangeAndCategory(requestDto.getUserId(), requestDto.getFromDate(),requestDto.getToDate(), requestDto.getCategory()));
+        Optional<String> keyword= Optional.ofNullable(requestDto.getKeyword());
+        Optional<String> category= Optional.ofNullable(requestDto.getCategory());
+        if(category.isPresent() && keyword.isPresent())
+            return ResponseEntity.ok(filterService.filterByDateRangeAndCategoryAndKeyword(requestDto));
+        else if (category.isPresent() && !keyword.isPresent())
+            return ResponseEntity.ok(filterService.filterByDateRangeAndCategory(requestDto));
         else
-            return ResponseEntity.ok(filterService.filterByDateRange(requestDto.getUserId(), requestDto.getFromDate(),requestDto.getToDate()));
+            return ResponseEntity.ok(filterService.filterByDateRange(requestDto));
     }
 
     @GetMapping("/summary/{userId}")
