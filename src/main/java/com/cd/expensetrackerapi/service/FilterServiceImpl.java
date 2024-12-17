@@ -1,6 +1,7 @@
 package com.cd.expensetrackerapi.service;
 
 import com.cd.expensetrackerapi.model.ExpenseMaster;
+import com.cd.expensetrackerapi.model.RequestDto;
 import com.cd.expensetrackerapi.model.SummaryDto;
 import com.cd.expensetrackerapi.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +19,23 @@ public class FilterServiceImpl implements IFilterService {
 
 
     @Override
-    public List<ExpenseMaster> filterByType(Long userId,String category, String keyword) {
-        return expenseRepository.findAllByCategoryAndIsDeletedAndTitleContainingIgnoreCase(userId, category,false,keyword.toLowerCase());
+    public List<ExpenseMaster> filterByType(RequestDto requestDto) {
+        return expenseRepository.findAllByCategoryAndIsDeletedAndTitleContainingIgnoreCase(requestDto.getUserId(), requestDto.getCategory(),false, requestDto.getKeyword().toLowerCase());
     }
 
     @Override
-    public List<ExpenseMaster> filterByDateRange(Long userId, LocalDate fromDate, LocalDate toDate) {
-        return expenseRepository.findAllByUserIdAndUpdatedDateBetween(userId,fromDate,toDate);
+    public List<ExpenseMaster> filterByDateRange(RequestDto requestDto) {
+        return expenseRepository.findAllByUserIdAndUpdatedDateBetween(requestDto.getUserId(), requestDto.getFromDate(), requestDto.getToDate());
     }
 
     @Override
-    public List<ExpenseMaster> filterByDateRangeAndCategory(Long userId, LocalDate fromDate, LocalDate toDate, String category) {
-        return expenseRepository.findAllByUserIdAndUpdatedDateBetweenAndCategory(fromDate,toDate,category,userId);
+    public List<ExpenseMaster> filterByDateRangeAndCategory(RequestDto requestDto) {
+        return expenseRepository.findAllByUserIdAndUpdatedDateBetweenAndCategory(requestDto.getFromDate(), requestDto.getToDate(), requestDto.getCategory(),requestDto.getUserId());
     }
 
     @Override
-    public List<ExpenseMaster> filterByDateRangeAndCategoryAndKeyword(Long userId, LocalDate fromDate, LocalDate toDate, String category, String keyword) {
-        return expenseRepository.findAllByUserIdAndUpdatedDateBetweenAndCategoryAndTitleContainingIgnoreCase(userId,fromDate,toDate,category,keyword.toLowerCase());
+    public List<ExpenseMaster> filterByDateRangeAndCategoryAndKeyword(RequestDto requestDto) {
+        return expenseRepository.findAllByUserIdAndUpdatedDateBetweenAndCategoryAndTitleContainingIgnoreCase(requestDto.getUserId(), requestDto.getFromDate(), requestDto.getToDate(), requestDto.getCategory(),requestDto.getKeyword().toLowerCase());
     }
 
     @Override

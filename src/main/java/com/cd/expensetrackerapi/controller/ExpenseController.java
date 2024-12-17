@@ -38,7 +38,6 @@ public class ExpenseController {
         return ResponseEntity.ok(iExpenseService.getDeletedExpenses(userId));
     }
 
-
     @PostMapping
     public ResponseEntity<ExpenseMaster> addExpenses( @Valid @RequestBody ExpenseMaster expenseMaster) throws URISyntaxException {
         ExpenseMaster expenseMasterNew= iExpenseService.addExpenses(expenseMaster);
@@ -49,11 +48,7 @@ public class ExpenseController {
     @PutMapping("/{expenseId}")
     public ExpenseMaster updateExpenses(@Valid @PathVariable Long expenseId,@RequestBody ExpenseMaster expenseMaster)
     {
-//        if( expenseId.equals(expenseMaster.getExpenseId()))
-            return  iExpenseService.updateExpenses(expenseMaster);
-//        else
-//            return  ResponseEntity.notFound().build();
-//            throw new EmployeeIDMismatchException();
+        return  iExpenseService.updateExpenses(expenseMaster);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteExpenses(@PathVariable Long id)
