@@ -12,12 +12,7 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository<UserMaster, Long > {
 
-    @Query("SELECT um FROM UserMaster um WHERE lower(um.username) =:username ")
     Optional<UserMaster> findByUsernameEqualsIgnoreCase(String username);
-
-    @Query("SELECT um FROM UserMaster um WHERE um.username=:username AND um.password=:password ")
     Optional<UserMaster> findByUsernameAndPassword(String username, String password);
-
-    @Query("SELECT um FROM UserMaster um WHERE um.username=:username AND um.password=:password ")
     UserMaster getUserByUsernameAndPassword(String username, String password);
 }
